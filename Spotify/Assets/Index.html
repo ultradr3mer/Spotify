@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spotify Web Playback</title>
+</head>
+<body>
+<script src='https://sdk.scdn.co/spotify-player.js'></script>
+<script>
+    function getURLParameter(name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+    }
+    window.onSpotifyWebPlaybackSDKReady = () => {
+        const token = getURLParameter('token');
+        const player = new Spotify.Player({
+            name: getURLParameter('client'),
+            getOAuthToken: cb => { cb(token); }
+        });
+
+        // Connect to the player!
+        player.connect();
+    };
+</script>
+</body>
+</html>

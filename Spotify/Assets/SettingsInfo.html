@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html ng-app="accounts" ng-csp>
+  <head>
+    <meta charset="utf-8">
+    <link href="https://d2d1dxiu3v1f2i.cloudfront.net/43d8772/css/index.css" media="screen" rel="stylesheet">
+	<h2 ng-class="{'client-name-with-image': client.image}" class="client-name ng-binding" ng-bind-html="'authorizeHeadline' | localize:client.name">Please enter your Spotify API <strong>Client ID</strong> and <strong>Client Secret</strong> on the Settings Page.<br/>
+	Make sure the Redirect URI is set to <strong>http://localhost:8000</strong>.<br/></h2>
+	<h3 class="disclaimer text-center ng-binding ng-scope">See <a href="https://beta.developer.spotify.com/" target="_blank">beta.developer.spotify.com</a> for more info.</h3>
+  </head>
+  <body ng-view></body>
+</html>
