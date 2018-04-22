@@ -39,7 +39,7 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <GridView ItemsSource="{Binding TrackViewModels}" FontFamily="Calibri" Margin="10" FontSize="15" Grid.Row="1"
+        <GridView Name="GridView" SelectedItem="{Binding SelectedTrackViewModel}" ItemsSource="{Binding TrackViewModels}" FontFamily="Calibri" Margin="10" FontSize="15" Grid.Row="1"
                   IsItemClickEnabled="True"
                   IsSwipeEnabled="true"
                   SelectionMode="Single"

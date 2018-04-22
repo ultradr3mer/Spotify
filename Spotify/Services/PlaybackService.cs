@@ -34,7 +34,7 @@
     private readonly IEventAggregator eventAggregator;
 
     /// <summary>The playing equality comparer.</summary>
-    private readonly CurrentlyPlayingEqualityComparer playingEqualityComparer = new CurrentlyPlayingEqualityComparer();
+    private readonly CurrentlyPlayingContextEqualityComparer playingEqualityComparer = new CurrentlyPlayingContextEqualityComparer();
 
     /// <summary>The running.</summary>
     private readonly bool running = true;
@@ -42,11 +42,11 @@
     /// <summary>The api client.</summary>
     private ISpotifyWebApi api;
 
-    /// <summary>The currently playing model.</summary>
-    private CurrentlyPlaying currentlyPlaying;
-
     /// <summary>The currently playing album uri.</summary>
     private string currentlyPlayingAlbumUri;
+
+    /// <summary>The currently playing context model.</summary>
+    private CurrentlyPlayingContext currentlyPlayingContext;
 
     /// <summary>The devices container.</summary>
     private DevicesContainer devicesContainer;
@@ -119,6 +119,13 @@
       this.api.Player.Seek(progressMs);
     }
 
+    /// <summary>Sets whether the shuffle is active.</summary>
+    /// <param name="b">if set to <c>true</c> the shuffle is active.</param>
+    public void SetShuffle(bool b)
+    {
+      this.api.Player.SetShuffle(b);
+    }
+
     /// <summary>The set currently played song.</summary>
     /// <param name="context">The playing context.</param>
     /// <param name="uri">The uri of the title to play.</param>
@@ -177,12 +184,12 @@
           this.devicesContainer = newDevicesContainer;
         }
 
-        var newCurrentlyPlaying = await this.api.Player.GetCurrentlyPlaying();
+        var newCurrentlyPlayingContext = await this.api.Player.GetCurrentlyPlayingContext();
 
-        if (!this.playingEqualityComparer.Equals(this.currentlyPlaying, newCurrentlyPlaying))
+        if (!this.playingEqualityComparer.Equals(this.currentlyPlayingContext, newCurrentlyPlayingContext))
         {
-          this.eventAggregator.GetEvent<CurrentlyPlayingChangedEvent>().Publish(newCurrentlyPlaying);
-          this.currentlyPlaying = newCurrentlyPlaying;
+          this.eventAggregator.GetEvent<CurrentlyPlayingContextChangedEvent>().Publish(newCurrentlyPlayingContext);
+          this.currentlyPlayingContext = newCurrentlyPlayingContext;
 
           await this.UpdateCurrentlyPlayingImage();
         }
@@ -195,7 +202,7 @@
     /// <returns>an awaitable</returns>
     private async Task UpdateCurrentlyPlayingImage()
     {
-      var albumUriString = this.currentlyPlaying.Item?.Album.Uri;
+      var albumUriString = this.currentlyPlayingContext.Item?.Album.Uri;
       if (albumUriString == this.currentlyPlayingAlbumUri)
       {
         return;

@@ -96,6 +96,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ApiModelExtensions\CurrentlyPlayingContextEqualityComparer.cs" />
     <Compile Include="ApiModelExtensions\DeviceEqualityComparer.cs" />
     <Compile Include="ApiModelExtensions\CurrentlyPlayingEqualityComparer.cs" />
     <Compile Include="ApiModelExtensions\DevicesContainerEqualityComparer.cs" />
@@ -105,7 +106,7 @@
     <Compile Include="Data\ConnectionData.cs" />
     <Compile Include="Data\PlaylistTrackData.cs" />
     <Compile Include="Data\SettingsData.cs" />
-    <Compile Include="Events\CurrentlyPlayingChangedEvent.cs" />
+    <Compile Include="Events\CurrentlyPlayingContextChangedEvent.cs" />
     <Compile Include="Events\ConnectionUriChangedEvent.cs" />
     <Compile Include="Events\CurrentlyPlayingImageChanged.cs" />
     <Compile Include="Events\DevicesChangedEvent.cs" />

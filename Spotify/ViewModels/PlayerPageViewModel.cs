@@ -19,6 +19,7 @@
 
   using Unity;
 
+  using Windows.UI.Xaml.Controls;
   using Windows.UI.Xaml.Media.Imaging;
 
   /// <summary>The player page view model.</summary>
@@ -26,6 +27,18 @@
   internal class PlayerPageViewModel : ViewModel
   {
     #region Fields
+
+    /// <summary>The pause glyph</summary>
+    private const char PauseGlyph = (char)Symbol.Pause;
+
+    /// <summary>The play glyph</summary>
+    private const char PlayGlyph = (char)Symbol.Play;
+
+    /// <summary>The shuffle off glyph.</summary>
+    private const char ShuffleOffGlyph = (char)Symbol.Forward;
+
+    /// <summary>The shuffle on glyph.</summary>
+    private const char ShuffleOnGlyph = (char)Symbol.Shuffle;
 
     /// <summary>The unity container.</summary>
     private readonly IUnityContainer container;
@@ -38,6 +51,9 @@
 
     /// <summary>Whether the view model is reading events. Used to prevent loop back.</summary>
     private bool isReadingEvents;
+
+    /// <summary>A value indicating whether shuffle is active.</summary>
+    private bool isShuffleActive;
 
     /// <summary>The property artists names value.</summary>
     private string propArtistsNames;
@@ -60,6 +76,9 @@
     /// <summary>The property play pause commands value.</summary>
     private ICommand propPlayPauseCommand;
 
+    /// <summary>The <see cref="PlayPauseGlyph" /> property's value.</summary>
+    private char propPlayPauseGlyph;
+
     /// <summary>The property previous commands value.</summary>
     private ICommand propPreviousCommand;
 
@@ -68,6 +87,12 @@
 
     /// <summary>The property selected devices value.</summary>
     private DeviceComboBoxItemViewModel propSelectedDevice;
+
+    /// <summary>The <see cref="ShuffleCommand" /> property's value.</summary>
+    private ICommand propShuffleCommand;
+
+    /// <summary>The <see cref="ShuffleGlyph" /> property's value.</summary>
+    private char propShuffleGlyph;
 
     /// <summary>The property track names value.</summary>
     private string propTrackName;
@@ -87,12 +112,13 @@
       var eventAggregator = container.Resolve<IEventAggregator>();
       eventAggregator.GetEvent<ConnectionEstablishedEvent>().Subscribe(this.HandleConnectionEstablished);
       eventAggregator.GetEvent<DevicesChangedEvent>().Subscribe(this.HandleDevicesChanged);
-      eventAggregator.GetEvent<CurrentlyPlayingChangedEvent>().Subscribe(this.HandleCurrentlyPlayingChanged);
+      eventAggregator.GetEvent<CurrentlyPlayingContextChangedEvent>().Subscribe(this.HandleCurrentlyPlayingContextChanged);
       eventAggregator.GetEvent<CurrentlyPlayingImageChanged>().Subscribe(this.HandleCurrentlyPlayingImageChanged);
 
       this.PlayPauseCommand = new DelegateCommand(this.PlayPauseCommandExecute);
       this.NextCommand = new DelegateCommand(this.NextCommandExecute);
       this.PreviousCommand = new DelegateCommand(this.PreviousCommandExecute);
+      this.ShuffleCommand = new DelegateCommand(this.ShuffleCommandExecute);
 
       this.PropertyChanged += this.PlayerPageViewModelPropertyChanged;
 
@@ -152,6 +178,13 @@
       set { this.SetProperty(ref this.propPlayPauseCommand, value); }
     }
 
+    /// <summary>Gets or sets the glyph for the play pause button.</summary>
+    public char PlayPauseGlyph
+    {
+      get { return this.propPlayPauseGlyph; }
+      set { this.SetProperty(ref this.propPlayPauseGlyph, value); }
+    }
+
     /// <summary>Gets or sets the previous command.</summary>
     public ICommand PreviousCommand
     {
@@ -171,6 +204,20 @@
     {
       get { return this.propSelectedDevice; }
       set { this.SetProperty(ref this.propSelectedDevice, value); }
+    }
+
+    /// <summary>Gets or sets the shuffle command.</summary>
+    public ICommand ShuffleCommand
+    {
+      get { return this.propShuffleCommand; }
+      set { this.SetProperty(ref this.propShuffleCommand, value); }
+    }
+
+    /// <summary>Gets or sets the glyph for the shuffle button.</summary>
+    public char ShuffleGlyph
+    {
+      get { return this.propShuffleGlyph; }
+      set { this.SetProperty(ref this.propShuffleGlyph, value); }
     }
 
     /// <summary>Gets or sets the track name.</summary>
@@ -201,9 +248,9 @@
       this.playbackService.StartContinuousUpdate();
     }
 
-    /// <summary>Handles the currently playing changed event.</summary>
+    /// <summary>Handles the currently playing context changed event.</summary>
     /// <param name="data">The data.</param>
-    private void HandleCurrentlyPlayingChanged(CurrentlyPlaying data)
+    private void HandleCurrentlyPlayingContextChanged(CurrentlyPlayingContext data)
     {
       this.isReadingEvents = true;
 
@@ -212,7 +259,7 @@
 
       if (data.Item != null)
       {
-        this.Progress = data.ProgressMs;
+        this.Progress = data.ProgressMs ?? 0;
         this.Duration = data.Item.DurationMs;
       }
       else
@@ -222,6 +269,12 @@
       }
 
       this.isPlaying = data.IsPlaying;
+
+      this.PlayPauseGlyph = this.isPlaying ? PlayerPageViewModel.PauseGlyph : PlayerPageViewModel.PlayGlyph;
+
+      this.isShuffleActive = data.ShuffleState;
+
+      this.ShuffleGlyph = this.isShuffleActive ? PlayerPageViewModel.ShuffleOnGlyph : PlayerPageViewModel.ShuffleOffGlyph;
 
       this.isReadingEvents = false;
     }
@@ -314,6 +367,12 @@
     private void PreviousCommandExecute()
     {
       this.playbackService.Previous();
+    }
+
+    /// <summary>Executes the shuffle command.</summary>
+    private void ShuffleCommandExecute()
+    {
+      this.playbackService.SetShuffle(!this.isShuffleActive);
     }
 
     /// <summary>Updates the is local device active value.</summary>
