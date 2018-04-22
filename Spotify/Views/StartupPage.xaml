@@ -12,7 +12,7 @@
                 <FadeOutThemeAnimation Storyboard.TargetName="ConnectWebView" />
             </Storyboard>
         </Grid.Resources>
-        <Image Source="ms-appx:///Assets/Sennheiser.jpg"  Stretch="UniformToFill"/>
-        <WebView Name="ConnectWebView" Source="{Binding ConnectUrl}" NavigationStarting="WebView_NavigationStarting"></WebView>
+        <Image Source="ms-appx:///Assets/Sennheiser.jpg" Stretch="UniformToFill" />
+        <WebView Name="ConnectWebView" Source="{Binding ConnectUrl}" NavigationStarting="WebView_NavigationStarting" />
     </Grid>
 </Page>

@@ -9,4 +9,3 @@
         <ResourceDictionary Source="Resources.xaml" />
     </mvvm:MvvmAppBase.Resources>
 </mvvm:MvvmAppBase>
-

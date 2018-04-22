@@ -1,19 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SpotifyWebApi;
-using SpotifyWebApi.Model;
-using SpotifyWebApi.Model.Auth;
-
-namespace Spotify.Data
+﻿namespace Spotify.Data
 {
-  class ConnectionData
+  using System.Collections.Generic;
+
+  using SpotifyWebApi;
+  using SpotifyWebApi.Model;
+  using SpotifyWebApi.Model.Auth;
+
+  /// <summary>The connection data.</summary>
+  internal class ConnectionData
   {
-    public PrivateUser Profile { get; set; }
-    public IList<SimplePlaylist> Playlists { get; set; }
+    #region Properties
+
+    /// <summary>Gets or sets the api client.</summary>
     public ISpotifyWebApi Api { get; set; }
+
+    /// <summary>Gets or sets the users playlists.</summary>
+    public IList<SimplePlaylist> Playlists { get; set; }
+
+    /// <summary>Gets or sets the users profile.</summary>
+    public PrivateUser Profile { get; set; }
+
+    /// <summary>Gets or sets the api token.</summary>
     public Token Token { get; set; }
+
+    #endregion
   }
 }

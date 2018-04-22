@@ -9,9 +9,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="80" />
         </Grid.RowDefinitions>
-        <NavigationView ItemInvoked="NavigationView_ItemInvoked"
+        <NavigationView ItemInvoked="NavigationViewItemInvoked"
                         x:Name="MainNavigation"
                         IsTabStop="False"
                         Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" AlwaysShowHeader="False">
@@ -27,11 +27,10 @@
             <NavigationViewItem Content="Nero+" Tag="Nero" />-->
             </NavigationView.MenuItems>
             <Frame x:Name="ContentFrame">
-                <views:StartupPage/>
+                <views:StartupPage />
             </Frame>
         </NavigationView>
-        <views:PlayerPage Grid.Row="1"/>
+        <views:PlayerPage Grid.Row="1" />
     </Grid>
-   
-</Page>
 
+</Page>

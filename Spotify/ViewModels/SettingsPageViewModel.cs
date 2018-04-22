@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Spotify.ViewModels
+﻿namespace Spotify.ViewModels
 {
   using Prism.Events;
 
@@ -15,8 +9,27 @@ namespace Spotify.ViewModels
 
   using Unity;
 
-  class SettingsPageViewModel : ViewModelWithAttachable<SettingsData>
+  /// <summary>The settings page view model.</summary>
+  /// <seealso cref="Spotify.PrismExtensions.ViewModelWithAttachable{Spotify.Data.SettingsData}" />
+  internal class SettingsPageViewModel : ViewModelWithAttachable<SettingsData>
   {
+    #region Fields
+
+    /// <summary>The settings service</summary>
+    private readonly SettingsService settingsService;
+
+    /// <summary>The property client identifiers value.</summary>
+    private string propClientId;
+
+    /// <summary>The property client secrets value.</summary>
+    private string propClientSecret;
+
+    #endregion
+
+    #region Constructors
+
+    /// <summary>Initializes a new instance of the <see cref="SettingsPageViewModel" /> class.</summary>
+    /// <param name="container">The container.</param>
     public SettingsPageViewModel(IUnityContainer container)
     {
       var eventAggregator = container.Resolve<IEventAggregator>();
@@ -25,32 +38,49 @@ namespace Spotify.ViewModels
       this.settingsService = container.Resolve<SettingsService>();
     }
 
-    private void HandleSettingsChanged(SettingsData data)
+    #endregion
+
+    #region Properties
+
+    /// <summary>
+    /// Gets or sets the client id.
+    /// </summary>
+    public string ClientId
     {
-      this.AttachedDataModel = data;
+      get { return this.propClientId; }
+      set { this.SetProperty(ref this.propClientId, value); }
     }
 
-    private string propClientId;
+    /// <summary>
+    /// Gets or sets the client secret.
+    /// </summary>
+    public string ClientSecret
+    {
+      get { return this.propClientSecret; }
+      set { this.SetProperty(ref this.propClientSecret, value); }
+    }
 
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// Called when navigated from this view.
+    /// </summary>
     internal void OnNavigatedFrom()
     {
       this.settingsService.SetSettings(this.AttachedDataModel);
     }
 
-    public string ClientId
+    /// <summary>
+    /// Handles the settings changed event.
+    /// </summary>
+    /// <param name="data">The data.</param>
+    private void HandleSettingsChanged(SettingsData data)
     {
-      get { return propClientId; }
-      set { this.SetProperty(ref propClientId, value); }
+      this.AttachedDataModel = data;
     }
 
-    private string propClientSecret;
-
-    private SettingsService settingsService;
-
-    public string ClientSecret
-    {
-      get { return propClientSecret; }
-      set { this.SetProperty(ref propClientSecret, value); }
-    }
+    #endregion
   }
 }

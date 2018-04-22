@@ -1,21 +1,29 @@
-﻿using System.Linq;
-using Windows.ApplicationModel;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Microsoft.Practices.Prism.Mvvm;
-using Microsoft.Practices.Prism.StoreApps;
-using Spotify.Interfaces;
-using Spotify.ViewModels;
-
-// Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x407 dokumentiert.
-
-namespace Spotify.Views
+﻿namespace Spotify.Views
 {
+  using System.ComponentModel;
+  using System.Linq;
+
+  using Microsoft.Practices.Prism.Mvvm;
+
+  using Spotify.ViewModels;
+
+  using Windows.ApplicationModel;
+  using Windows.UI.Xaml.Controls;
+
   /// <summary>
-  /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+  /// The main page.
   /// </summary>
+  /// <seealso cref="Windows.UI.Xaml.Controls.Page" />
+  /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+  /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+  /// <seealso cref="Microsoft.Practices.Prism.Mvvm.IView" />
   public sealed partial class MainPage : Page, IView
   {
+    #region Constructors
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MainPage"/> class.
+    /// </summary>
     public MainPage()
     {
       this.InitializeComponent();
@@ -24,11 +32,69 @@ namespace Spotify.Views
       {
         ViewModelLocator.SetAutoWireViewModel(this, true);
 
-        this.ViewModel.PropertyChanged += ViewModel_PropertyChanged;
+        this.ViewModel.PropertyChanged += this.ViewModelPropertyChanged;
       }
     }
 
-    private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    #endregion
+
+    #region Properties
+
+    /// <summary>
+    /// Gets the view model.
+    /// </summary>
+    private MainPageViewModel ViewModel
+    {
+      get { return this.DataContext as MainPageViewModel; }
+    }
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// Called when an item of the navigation view was invoked.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="args">The <see cref="NavigationViewItemInvokedEventArgs"/> instance containing the event data.</param>
+    private void NavigationViewItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+    {
+      if (args.IsSettingsInvoked)
+      {
+        this.ContentFrame.Navigate(typeof(SettingsPage));
+      }
+      else
+      {
+        // find NavigationViewItem with Content that equals InvokedItem
+        var item = sender.MenuItems.OfType<NavigationViewItem>().First(x => (string)x.Content == (string)args.InvokedItem);
+        this.Navigate(item);
+      }
+    }
+
+    /// <summary>
+    /// Navigates the to the view model of the specified item.
+    /// </summary>
+    /// <param name="item">The item.</param>
+    private void Navigate(NavigationViewItem item)
+    {
+      switch (item.Tag)
+      {
+        case "Playlist":
+          this.ContentFrame.Navigate(typeof(PlaylistPage));
+          break;
+
+        case "Startup":
+          this.ContentFrame.Navigate(typeof(StartupPage));
+          break;
+      }
+    }
+
+    /// <summary>
+    /// Called when a property of the view model was changed.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+    private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       if (e.PropertyName == "Playlists")
       {
@@ -36,43 +102,15 @@ namespace Spotify.Views
 
         foreach (var playList in this.ViewModel.Playlists)
         {
-          var item = new PlaylistMenuItem {DataContext = playList};
+          var item = new PlaylistMenuItem
+                       {
+                         DataContext = playList
+                       };
           this.MainNavigation.MenuItems.Add(item);
         }
       }
     }
 
-    private MainPageViewModel ViewModel
-    {
-      get { return this.DataContext as MainPageViewModel; }
-    }
-
-    private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
-    {
-      if (args.IsSettingsInvoked)
-      {
-        ContentFrame.Navigate(typeof(SettingsPage));
-      }
-      else
-      {
-        // find NavigationViewItem with Content that equals InvokedItem
-        var item = sender.MenuItems.OfType<NavigationViewItem>().First(x => (string)x.Content == (string)args.InvokedItem);
-        NavView_Navigate(item);
-      }
-    }
-
-    private void NavView_Navigate(NavigationViewItem item)
-    {
-      switch (item.Tag)
-      {
-        case "Playlist":
-          ContentFrame.Navigate(typeof(PlaylistPage));
-          break;
-
-        case "Startup":
-          ContentFrame.Navigate(typeof(StartupPage));
-          break;
-      }
-    }
+    #endregion
   }
 }

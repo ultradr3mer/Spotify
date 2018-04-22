@@ -4,6 +4,7 @@
 
   using Windows.UI.Xaml.Media.Imaging;
 
+  /// <summary>The playlist image changed event.</summary>
   internal class PlaylistImageChangedEvent : PubSubEvent<BitmapImage>
   {
   }

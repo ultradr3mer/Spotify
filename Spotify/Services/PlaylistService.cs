@@ -1,29 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Media.Imaging;
-using Prism.Events;
-using Spotify.Data;
-using Spotify.Events;
-using SpotifyWebApi;
-using SpotifyWebApi.Business;
-using SpotifyWebApi.Model;
-using SpotifyWebApi.Model.Auth;
-using SpotifyWebApi.Model.Uri;
-using Unity;
-
-namespace Spotify.Services
+﻿namespace Spotify.Services
 {
-  class PlaylistService
-  {
-    private IUnityContainer container;
-    private ISpotifyWebApi api;
-    private IEventAggregator eventAggregator;
-    private Token token;
+  using System;
+  using System.Linq;
 
+  using Prism.Events;
+
+  using Spotify.Events;
+
+  using SpotifyWebApi;
+  using SpotifyWebApi.Business;
+  using SpotifyWebApi.Model;
+  using SpotifyWebApi.Model.Auth;
+  using SpotifyWebApi.Model.Uri;
+
+  using Unity;
+
+  using Windows.UI.Xaml.Media.Imaging;
+
+  /// <summary>The Playlist Service.</summary>
+  internal class PlaylistService
+  {
+    #region Fields
+
+    /// <summary>The API Client.</summary>
+    private readonly ISpotifyWebApi api;
+
+    /// <summary>The event aggregator.</summary>
+    private readonly IEventAggregator eventAggregator;
+
+    /// <summary>The token.</summary>
+    private readonly Token token;
+
+    /// <summary>The container.</summary>
+    private IUnityContainer container;
+
+    #endregion
+
+    #region Constructors
+
+    /// <summary>Initializes a new instance of the <see cref="PlaylistService" /> class inside the context of the given container.</summary>
+    /// <param name="container">The container.</param>
     public PlaylistService(IUnityContainer container)
     {
       this.container = container;
@@ -33,24 +49,26 @@ namespace Spotify.Services
       this.token = container.Resolve<Token>();
     }
 
+    #endregion
+
+    #region Methods
+
+    /// <summary>Sets the playlist.</summary>
+    /// <param name="uri">The URI of the playlist.</param>
     public async void SetPlaylist(SpotifyUri uri)
     {
-      var getPlaylist = api.Playlist.GetPlaylist(uri);
+      var getPlaylist = this.api.Playlist.GetPlaylist(uri);
 
       var playList = await getPlaylist;
 
-      eventAggregator.GetEvent<PlaylistChangedEvent>().Publish(playList);
+      this.eventAggregator.GetEvent<PlaylistChangedEvent>().Publish(playList);
 
       this.LoadAllTracks(playList.Tracks);
       this.LoadImage(playList.Images.First());
     }
 
-    private void LoadImage(Image image)
-    {
-      var bitmapImage = new BitmapImage(new Uri(image.Url));
-      eventAggregator.GetEvent<PlaylistImageChangedEvent>().Publish(bitmapImage);
-    }
-
+    /// <summary>Loads all tracks.</summary>
+    /// <param name="curPage">The current page.</param>
     private async void LoadAllTracks(Paging<PlaylistTrack> curPage)
     {
       while (curPage.Next != null)
@@ -60,9 +78,19 @@ namespace Spotify.Services
         if ((response = nextPage.Response as Paging<PlaylistTrack>) != null)
         {
           curPage = response;
-          eventAggregator.GetEvent<PlaylistItemsAddedEvent>().Publish(response.Items);
+          this.eventAggregator.GetEvent<PlaylistItemsAddedEvent>().Publish(response.Items);
         }
       }
     }
+
+    /// <summary>Loads the image.</summary>
+    /// <param name="image">The image.</param>
+    private void LoadImage(Image image)
+    {
+      var bitmapImage = new BitmapImage(new Uri(image.Url));
+      this.eventAggregator.GetEvent<PlaylistImageChangedEvent>().Publish(bitmapImage);
+    }
+
+    #endregion
   }
 }

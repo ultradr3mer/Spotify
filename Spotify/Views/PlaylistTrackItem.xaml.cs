@@ -1,27 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-
-// Die Elementvorlage "Benutzersteuerelement" wird unter https://go.microsoft.com/fwlink/?LinkId=234236 dokumentiert.
-
-namespace Spotify.Views
+﻿namespace Spotify.Views
 {
+  using Windows.UI.Xaml.Controls;
+
+  /// <summary>
+  /// The playlist track item.
+  /// </summary>
+  /// <seealso cref="Windows.UI.Xaml.Controls.UserControl" />
+  /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+  /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
   public sealed partial class PlaylistTrackItem : UserControl
   {
+    #region Constructors
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PlaylistTrackItem"/> class.
+    /// </summary>
     public PlaylistTrackItem()
     {
       this.InitializeComponent();
     }
+
+    #endregion
   }
 }

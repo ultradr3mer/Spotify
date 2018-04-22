@@ -16,24 +16,32 @@
 
   using Unity;
 
+  /// <summary>The connection service.</summary>
   internal class ConnectionService
   {
     #region Fields
 
+    /// <summary>The callback host name.</summary>
     public const string CallbackHost = "localhost";
 
+    /// <summary>The unity container.</summary>
     private readonly IUnityContainer container;
 
+    /// <summary>The event aggregator.</summary>
     private readonly IEventAggregator eventAggregator;
 
+    /// <summary>The api parameter.</summary>
     private AuthParameters apiParameter;
 
+    /// <summary>If the connection service is awaiting a callback.</summary>
     private bool isAwaiting;
 
     #endregion
 
     #region Constructors
 
+    /// <summary>Initializes a new instance of the <see cref="ConnectionService" /> class inside the context of the given container.</summary>
+    /// <param name="container">The container.</param>
     public ConnectionService(IUnityContainer container)
     {
       this.container = container;

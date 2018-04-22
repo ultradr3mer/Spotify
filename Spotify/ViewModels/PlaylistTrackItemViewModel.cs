@@ -14,37 +14,72 @@
 
   using Unity;
 
+  /// <summary>
+  /// The playlist track item view model.
+  /// </summary>
+  /// <seealso cref="Spotify.PrismExtensions.ViewModelWithAttachable{Spotify.Data.PlaylistTrackData}" />
   internal class PlaylistTrackItemViewModel : ViewModelWithAttachable<PlaylistTrackData>
   {
     #region Fields
 
+    /// <summary>
+    /// The playback service.
+    /// </summary>
     private readonly PlaybackService playbackService;
 
+    /// <summary>
+    /// The property added at strings value.
+    /// </summary>
     private string propAddedAtString;
 
+    /// <summary>
+    /// The property album names value.
+    /// </summary>
     private string propAlbumName;
 
+    /// <summary>
+    /// The property artists names value.
+    /// </summary>
     private string propArtistsNames;
 
+    /// <summary>
+    /// The property duration strings value.
+    /// </summary>
     private string propDurationString;
 
+    /// <summary>
+    /// The property names value.
+    /// </summary>
     private string propName;
 
+    /// <summary>
+    /// The property play commands value.
+    /// </summary>
     private ICommand propPlayCommand;
 
+    /// <summary>
+    /// The property playlist URIs value.
+    /// </summary>
     private string propPlaylistUri;
 
+    /// <summary>
+    /// The property URIs value.
+    /// </summary>
     private string propUri;
 
     #endregion
 
     #region Constructors
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PlaylistTrackItemViewModel"/> class inside the context of the given container.
+    /// </summary>
+    /// <param name="container">The container.</param>
     public PlaylistTrackItemViewModel(IUnityContainer container)
     {
       this.playbackService = container.Resolve<PlaybackService>();
 
-      this.ReadingDataModel += this.PlaylistTrackViewModel_ReadingDataModel;
+      this.ReadingDataModel += this.ReadDataModel;
 
       this.PlayCommand = new DelegateCommand(this.PlayCommandExecute);
     }
@@ -53,48 +88,72 @@
 
     #region Properties
 
+    /// <summary>
+    /// Gets or sets the added at date as string.
+    /// </summary>
     public string AddedAtString
     {
       get { return this.propAddedAtString; }
       set { this.SetProperty(ref this.propAddedAtString, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the album name.
+    /// </summary>
     public string AlbumName
     {
       get { return this.propAlbumName; }
       set { this.SetProperty(ref this.propAlbumName, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the artists names.
+    /// </summary>
     public string ArtistsNames
     {
       get { return this.propArtistsNames; }
       set { this.SetProperty(ref this.propArtistsNames, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the duration as string.
+    /// </summary>
     public string DurationString
     {
       get { return this.propDurationString; }
       set { this.SetProperty(ref this.propDurationString, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the name.
+    /// </summary>
     public string Name
     {
       get { return this.propName; }
       set { this.SetProperty(ref this.propName, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the play command.
+    /// </summary>
     public ICommand PlayCommand
     {
       get { return this.propPlayCommand; }
       set { this.SetProperty(ref this.propPlayCommand, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the playlist uri.
+    /// </summary>
     public string PlaylistUri
     {
       get { return this.propPlaylistUri; }
       set { this.SetProperty(ref this.propPlaylistUri, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the uri.
+    /// </summary>
     public string Uri
     {
       get { return this.propUri; }
@@ -105,14 +164,22 @@
 
     #region Methods
 
+    /// <summary>
+    /// Executes the play command.
+    /// </summary>
     private void PlayCommandExecute()
     {
       this.playbackService.SetSong(SpotifyUri.Make(this.PlaylistUri), SpotifyUri.Make(this.Uri));
     }
 
-    private void PlaylistTrackViewModel_ReadingDataModel(object sender, EventArgs<PlaylistTrackData> e)
+    /// <summary>
+    /// Reads the data model.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="EventArgs{PlaylistTrackData}"/> instance containing the event data.</param>
+    private void ReadDataModel(object sender, EventArgs<PlaylistTrackData> e)
     {
-      var data = e.Data;
+      var data = e.Payload;
       var playlistTrackTrack = data.PlaylistTrack.Track;
 
       this.AlbumName = playlistTrackTrack.Album.Name;

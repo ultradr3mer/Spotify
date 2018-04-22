@@ -7,5 +7,5 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Tag="Playlist"
-    Content="{Binding Name}" Tapped="PlaylistMenuItem_OnTapped" >
+    Content="{Binding Name}" Tapped="PlaylistMenuItemOnTapped">
 </NavigationViewItem>

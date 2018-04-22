@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Spotify.Data
+﻿namespace Spotify.Data
 {
-  class SettingsData
+  /// <summary>The settings data.</summary>
+  internal class SettingsData
   {
+    #region Properties
+
+    /// <summary>Gets or sets the client id.</summary>
     public string ClientId { get; set; }
 
+    /// <summary>Gets or sets the client secret.</summary>
     public string ClientSecret { get; set; }
+
+    #endregion
   }
 }

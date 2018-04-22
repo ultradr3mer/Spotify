@@ -1,32 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Microsoft.Practices.Prism.Mvvm;
-using Spotify.Services;
+﻿
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
-
 namespace Spotify.Views
 {
+  using Microsoft.Practices.Prism.Mvvm;
+
+  using Spotify.Services;
   using Spotify.ViewModels;
 
-  /// <summary>
-  /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-  /// </summary>
+  using Windows.ApplicationModel;
+  using Windows.UI.Xaml.Controls;
+  using Windows.UI.Xaml.Navigation;
+
+  /// <summary>Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.</summary>
   public sealed partial class StartupPage : Page, IView
   {
+    #region Constructors
+
     public StartupPage()
     {
       this.InitializeComponent();
@@ -37,10 +27,18 @@ namespace Spotify.Views
       }
     }
 
+    #endregion
+
+    #region Properties
+
     private StartupPageViewModel ViewModel
     {
       get { return this.DataContext as StartupPageViewModel; }
     }
+
+    #endregion
+
+    #region Methods
 
     protected override async void OnNavigatedTo(NavigationEventArgs e)
     {
@@ -56,5 +54,7 @@ namespace Spotify.Views
         this.ExitStoryboard.Begin();
       }
     }
+
+    #endregion
   }
 }

@@ -39,9 +39,11 @@
                                     <VisualState x:Name="PointerOver">
                                         <VisualState.Setters>
                                             <Setter Target="RootGrid.(RevealBrush.State)" Value="PointerOver" />
-                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ButtonRevealBackgroundPointerOver}" />
-                                            <Setter Target="ContentPresenter.BorderBrush" Value="Transparent"/>
-                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ButtonForegroundPointerOver}" />
+                                            <Setter Target="RootGrid.Background"
+                                                    Value="{ThemeResource ButtonRevealBackgroundPointerOver}" />
+                                            <Setter Target="ContentPresenter.BorderBrush" Value="Transparent" />
+                                            <Setter Target="ContentPresenter.Foreground"
+                                                    Value="{ThemeResource ButtonForegroundPointerOver}" />
                                             <Setter Target="ContentPresenter.Opacity" Value="0.8" />
                                         </VisualState.Setters>
 
@@ -53,9 +55,12 @@
                                     <VisualState x:Name="Pressed">
                                         <VisualState.Setters>
                                             <Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed" />
-                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ButtonRevealBackgroundPressed}" />
-                                            <Setter Target="ContentPresenter.BorderBrush" Value="{ThemeResource ButtonRevealBackgroundPressed}" />
-                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ButtonForegroundPressed}" />
+                                            <Setter Target="RootGrid.Background"
+                                                    Value="{ThemeResource ButtonRevealBackgroundPressed}" />
+                                            <Setter Target="ContentPresenter.BorderBrush"
+                                                    Value="{ThemeResource ButtonRevealBackgroundPressed}" />
+                                            <Setter Target="ContentPresenter.Foreground"
+                                                    Value="{ThemeResource ButtonForegroundPressed}" />
                                             <Setter Target="ContentPresenter.Opacity" Value="1" />
                                         </VisualState.Setters>
 
@@ -66,25 +71,28 @@
 
                                     <VisualState x:Name="Disabled">
                                         <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ButtonRevealBackgroundDisabled}" />
-                                            <Setter Target="ContentPresenter.BorderBrush" Value="{ThemeResource ButtonRevealBorderBrushDisabled}" />
-                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ButtonForegroundDisabled}" />
+                                            <Setter Target="RootGrid.Background"
+                                                    Value="{ThemeResource ButtonRevealBackgroundDisabled}" />
+                                            <Setter Target="ContentPresenter.BorderBrush"
+                                                    Value="{ThemeResource ButtonRevealBorderBrushDisabled}" />
+                                            <Setter Target="ContentPresenter.Foreground"
+                                                    Value="{ThemeResource ButtonForegroundDisabled}" />
                                         </VisualState.Setters>
                                     </VisualState>
                                 </VisualStateGroup>
 
                             </VisualStateManager.VisualStateGroups>
                             <ContentPresenter x:Name="ContentPresenter"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    Content="{TemplateBinding Content}"
-                    ContentTransitions="{TemplateBinding ContentTransitions}"
-                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                    Padding="{TemplateBinding Padding}"
-                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                    AutomationProperties.AccessibilityView="Raw"
-                    Opacity="0"/>
+                                              BorderBrush="{TemplateBinding BorderBrush}"
+                                              BorderThickness="{TemplateBinding BorderThickness}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTransitions="{TemplateBinding ContentTransitions}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              AutomationProperties.AccessibilityView="Raw"
+                                              Opacity="0" />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -93,28 +101,34 @@
     </UserControl.Resources>
     <Grid Background="{ThemeResource ElementDefaultColorBright}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="7*"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="7*" />
+            <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBlock Text="{Binding Name}" FontSize="16" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Margin="7,0,5,0"/>
-            <TextBlock Text="{Binding ArtistsNames}" Grid.Row="1"  FontSize="16" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Margin="7,0,5,0"/>
+            <TextBlock Text="{Binding Name}" FontSize="16" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"
+                       Margin="7,0,5,0" />
+            <TextBlock Text="{Binding ArtistsNames}" Grid.Row="1" FontSize="16" TextTrimming="CharacterEllipsis"
+                       VerticalAlignment="Center" Margin="7,0,5,0" />
         </Grid>
-        <Grid Grid.Column="1" Background="{ThemeResource ElementDefaultColorDark}" >
+        <Grid Grid.Column="1" Background="{ThemeResource ElementDefaultColorDark}">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBlock Text="{Binding AlbumName}" FontSize="16" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Margin="7,0,7,0" Foreground="#FFBBBBBB"/>
-            <TextBlock Text="{Binding AddedAtString}" FontSize="16" Grid.Row="1" VerticalAlignment="Center" Margin="7,0,5,0" HorizontalAlignment="Left" Foreground="#FFBBBBBB"/>
-            <TextBlock Text="{Binding DurationString}" FontSize="16" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,7,0" Foreground="#FFBBBBBB"/>
+            <TextBlock Text="{Binding AlbumName}" FontSize="16" TextTrimming="CharacterEllipsis"
+                       VerticalAlignment="Center" Margin="7,0,7,0" Foreground="#FFBBBBBB" />
+            <TextBlock Text="{Binding AddedAtString}" FontSize="16" Grid.Row="1" VerticalAlignment="Center"
+                       Margin="7,0,5,0" HorizontalAlignment="Left" Foreground="#FFBBBBBB" />
+            <TextBlock Text="{Binding DurationString}" FontSize="16" Grid.Row="1" VerticalAlignment="Center"
+                       HorizontalAlignment="Right" Margin="5,0,7,0" Foreground="#FFBBBBBB" />
         </Grid>
-        <Button Background="Transparent" Command="{Binding PlayCommand}" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource CustomButtonStyle}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE768;" Opacity="0.8" FontSize="48"/>
+        <Button Background="Transparent" Command="{Binding PlayCommand}" Grid.Column="0" Grid.ColumnSpan="2"
+                Style="{StaticResource CustomButtonStyle}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE768;" Opacity="0.8" FontSize="48" />
         </Button>
         <!--<Button Background="Transparent" Grid.Column="1" Style="{StaticResource CustomButtonStyle}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Opacity="0.8" FontSize="48"/>

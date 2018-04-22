@@ -4,10 +4,15 @@
 
   using SpotifyWebApi.Model;
 
+  /// <summary>The equality comparer for the device model.</summary>
   public sealed class DeviceEqualityComparer : IEqualityComparer<Device>
   {
     #region Methods
 
+    /// <summary>Checks whether the two models equal each other.</summary>
+    /// <param name="x">The first model.</param>
+    /// <param name="y">The second model.</param>
+    /// <returns>Whether the two models equal each other.</returns>
     public bool Equals(Device x, Device y)
     {
       if (object.ReferenceEquals(x, y))
@@ -30,10 +35,12 @@
         return false;
       }
 
-      return string.Equals(x.Id, y.Id) && x.IsActive == y.IsActive && x.IsRestricted == y.IsRestricted
-             && string.Equals(x.Name, y.Name) && string.Equals(x.Type, y.Type) && x.VolumePercent == y.VolumePercent;
+      return string.Equals(x.Id, y.Id) && x.IsActive == y.IsActive && x.IsRestricted == y.IsRestricted && string.Equals(x.Name, y.Name) && string.Equals(x.Type, y.Type) && x.VolumePercent == y.VolumePercent;
     }
 
+    /// <summary>Gets the hash code for the model.</summary>
+    /// <param name="obj">The model.</param>
+    /// <returns>The hash code.</returns>
     public int GetHashCode(Device obj)
     {
       unchecked

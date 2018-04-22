@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Microsoft.Practices.Prism.Mvvm;
-
-// Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
-
-namespace Spotify.Views
+﻿namespace Spotify.Views
 {
+  using Microsoft.Practices.Prism.Mvvm;
+
+  using Windows.ApplicationModel;
+  using Windows.UI.Xaml.Controls;
+
   /// <summary>
-  /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+  /// The player page.
   /// </summary>
+  /// <seealso cref="Windows.UI.Xaml.Controls.Page" />
+  /// <seealso cref="Microsoft.Practices.Prism.Mvvm.IView" />
+  /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+  /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
   public sealed partial class PlayerPage : Page, IView
   {
+    #region Constructors
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PlayerPage"/> class.
+    /// </summary>
     public PlayerPage()
     {
       this.InitializeComponent();
@@ -33,5 +28,7 @@ namespace Spotify.Views
         ViewModelLocator.SetAutoWireViewModel(this, true);
       }
     }
+
+    #endregion
   }
 }

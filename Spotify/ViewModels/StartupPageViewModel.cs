@@ -1,35 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Prism.Mvvm;
-using Spotify.Services;
-
-namespace Spotify.ViewModels
+﻿namespace Spotify.ViewModels
 {
-  using Windows.UI.Xaml.Navigation;
+  using System;
+
+  using Microsoft.Practices.Prism.Mvvm;
 
   using Prism.Events;
 
   using Spotify.Data;
   using Spotify.Events;
+  using Spotify.Services;
 
   using Unity;
 
-  class StartupPageViewModel : ViewModel
+  /// <summary>
+  /// The startup page view model.
+  /// </summary>
+  /// <seealso cref="Microsoft.Practices.Prism.Mvvm.ViewModel" />
+  internal class StartupPageViewModel : ViewModel
   {
+    #region Fields
+
+    /// <summary>
+    /// The connection service.
+    /// </summary>
+    private readonly ConnectionService connectionService;
+
+    /// <summary>
+    /// The property connect URLs value.
+    /// </summary>
     private Uri propConnectUrl;
 
-    private ConnectionService connectionService;
-
+    /// <summary>
+    /// The settings.
+    /// </summary>
     private SettingsData settings;
 
-    public Uri ConnectUrl
-    {
-      get { return propConnectUrl; }
-      set { this.SetProperty(ref propConnectUrl, value); }
-    }
+    #endregion
+
+    #region Constructors
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="StartupPageViewModel"/> class in the context of the given container.
+    /// </summary>
+    /// <param name="container">The container.</param>
     public StartupPageViewModel(IUnityContainer container)
     {
       var eventAggregator = container.Resolve<IEventAggregator>();
@@ -45,19 +58,49 @@ namespace Spotify.ViewModels
       this.connectionService.TryInitializeConnection(this.settings.ClientId, this.settings.ClientSecret);
     }
 
+    #endregion
+
+    #region Properties
+
+    /// <summary>
+    /// Gets or sets the connect URL.
+    /// </summary>
+    public Uri ConnectUrl
+    {
+      get { return this.propConnectUrl; }
+      set { this.SetProperty(ref this.propConnectUrl, value); }
+    }
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// Called when navigated to this view model.
+    /// </summary>
     internal void OnNavigatedTo()
     {
       this.connectionService.TryInitializeConnection(this.settings.ClientId, this.settings.ClientSecret);
     }
 
-    private void HandleSettingsChanged(SettingsData settings)
-    {
-      this.settings = settings;
-    }
-
+    /// <summary>
+    /// Handles the connection URI changed event.
+    /// </summary>
+    /// <param name="uri">The URI.</param>
     private void HandleConnectionUriChanged(Uri uri)
     {
       this.ConnectUrl = uri;
     }
+
+    /// <summary>
+    /// Handles the settings changed event.
+    /// </summary>
+    /// <param name="newSettings">The settings.</param>
+    private void HandleSettingsChanged(SettingsData newSettings)
+    {
+      this.settings = newSettings;
+    }
+
+    #endregion
   }
 }

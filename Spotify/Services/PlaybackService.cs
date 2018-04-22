@@ -17,37 +17,46 @@
 
   using Unity;
 
-  using Windows.ApplicationModel.Background;
   using Windows.UI.Xaml.Media.Imaging;
 
+  /// <summary>The playback service.</summary>
   internal class PlaybackService
   {
     #region Fields
 
+    /// <summary>The unity container.</summary>
     private readonly IUnityContainer container;
 
+    /// <summary>The devices equality comparer.</summary>
     private readonly DevicesContainerEqualityComparer devicesEqualityComparer = new DevicesContainerEqualityComparer();
 
+    /// <summary>The event aggregator.</summary>
     private readonly IEventAggregator eventAggregator;
 
+    /// <summary>The playing equality comparer.</summary>
     private readonly CurrentlyPlayingEqualityComparer playingEqualityComparer = new CurrentlyPlayingEqualityComparer();
 
+    /// <summary>The running.</summary>
     private readonly bool running = true;
 
+    /// <summary>The api client.</summary>
     private ISpotifyWebApi api;
 
+    /// <summary>The currently playing model.</summary>
     private CurrentlyPlaying currentlyPlaying;
 
+    /// <summary>The currently playing album uri.</summary>
     private string currentlyPlayingAlbumUri;
 
+    /// <summary>The devices container.</summary>
     private DevicesContainer devicesContainer;
-
-    private ApplicationTrigger trigger;
 
     #endregion
 
     #region Constructors
 
+    /// <summary>Initializes a new instance of the <see cref="PlaybackService" /> class inside the context of the given container.</summary>
+    /// <param name="container">The container.</param>
     public PlaybackService(IUnityContainer container)
     {
       this.container = container;
@@ -61,12 +70,15 @@
 
     #region Properties
 
+    /// <summary>Gets the web player client name.</summary>
     public string WebPlayerClientName { get; }
 
     #endregion
 
     #region Methods
 
+    /// <summary>Activates the device.</summary>
+    /// <param name="deviceId">The device identifier.</param>
     public async void ActivateDevice(string deviceId)
     {
       await this.api.Player.TransferPlayback(
@@ -76,31 +88,40 @@
           });
     }
 
+    /// <summary>Sets the playback to the next title.</summary>
     public void Next()
     {
       this.api.Player.Next();
     }
 
+    /// <summary>Pauses the playback.</summary>
     public void Pause()
     {
       this.api.Player.PausePlayback();
     }
 
+    /// <summary>Sets the playback to the previous title.</summary>
     public void Previous()
     {
       this.api.Player.Previous();
     }
 
+    /// <summary>Resumes the playback.</summary>
     public void Resume()
     {
       this.api.Player.StartPlayback();
     }
 
-    public void SetProgress(int progress)
+    /// <summary>Sets the progress inside the current title.</summary>
+    /// <param name="progressMs">The progress in milliseconds.</param>
+    public void SetProgress(int progressMs)
     {
-      this.api.Player.Seek(progress);
+      this.api.Player.Seek(progressMs);
     }
 
+    /// <summary>The set currently played song.</summary>
+    /// <param name="context">The playing context.</param>
+    /// <param name="uri">The uri of the title to play.</param>
     public async void SetSong(SpotifyUri context, SpotifyUri uri)
     {
       await this.EnsureActiveDeviceExists();
@@ -115,12 +136,15 @@
           });
     }
 
+    /// <summary>Starts the continuous update.</summary>
     public void StartContinuousUpdate()
     {
       this.api = this.container.Resolve<ISpotifyWebApi>();
       this.UpdateContinuously();
     }
 
+    /// <summary>Ensures an active device exists by checking for an active device and activating this device as active device if no device was found.</summary>
+    /// <returns>an awaitable.</returns>
     private async Task EnsureActiveDeviceExists()
     {
       if (this.devicesContainer == null)
@@ -140,6 +164,7 @@
       }
     }
 
+    /// <summary>Updates continuously.</summary>
     private async void UpdateContinuously()
     {
       while (this.running)
@@ -166,6 +191,8 @@
       }
     }
 
+    /// <summary>Updates the currently playing image.</summary>
+    /// <returns>an awaitable</returns>
     private async Task UpdateCurrentlyPlayingImage()
     {
       var albumUriString = this.currentlyPlaying.Item?.Album.Uri;

@@ -103,7 +103,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\ConnectionData.cs" />
-    <Compile Include="Data\ExamplePlayList.cs" />
     <Compile Include="Data\PlaylistTrackData.cs" />
     <Compile Include="Data\SettingsData.cs" />
     <Compile Include="Events\CurrentlyPlayingChangedEvent.cs" />
@@ -115,7 +114,6 @@
     <Compile Include="Events\PlaylistItemsAddedEvent.cs" />
     <Compile Include="Events\ConnectionEstablishedEvent.cs" />
     <Compile Include="Events\SettingsChangedEvent.cs" />
-    <Compile Include="Interfaces\INavigationPointer.cs" />
     <Compile Include="PrismExtensions\EventArgsOfT.cs" />
     <Compile Include="PrismExtensions\ViewModelWithAttachable.cs" />
     <Compile Include="Services\PlaybackService.cs" />
@@ -131,14 +129,13 @@
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\StartupPageViewModel.cs" />
     <Compile Include="ViewModels\PlaylistTrackItemViewModel.cs" />
-    <Compile Include="Views\DeviceComboboxItem.xaml.cs">
-      <DependentUpon>DeviceComboboxItem.xaml</DependentUpon>
+    <Compile Include="Views\DeviceComboBoxItem.xaml.cs">
+      <DependentUpon>DeviceComboBoxItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\TitleData.cs" />
     <Compile Include="Views\PlayerPage.xaml.cs">
       <DependentUpon>PlayerPage.xaml</DependentUpon>
     </Compile>
@@ -190,7 +187,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DeviceComboboxItem.xaml">
+    <Page Include="Views\DeviceComboBoxItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -243,6 +240,9 @@
     <PackageReference Include="Unity">
       <Version>5.8.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

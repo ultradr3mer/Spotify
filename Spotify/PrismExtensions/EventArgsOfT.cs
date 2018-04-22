@@ -1,48 +1,31 @@
 ﻿namespace Spotify.PrismExtensions
 {
   using System;
-  using System.ComponentModel;
 
+  /// <summary>Generic event args of type t.</summary>
+  /// <typeparam name="T">The type of the event args payload.</typeparam>
   public class EventArgs<T> : EventArgs
   {
-    #region Properties
-
-    public T Data { get; set; }
-
-    #endregion
-
     #region Constructors
 
+    /// <summary>Initializes a new instance of the <see cref="EventArgs{T}" /> class.</summary>
     public EventArgs()
     {
     }
 
-    public EventArgs(T data)
+    /// <summary>Initializes a new instance of the <see cref="EventArgs{T}" /> class.</summary>
+    /// <param name="payload">The payload.</param>
+    public EventArgs(T payload)
     {
-      this.Data = data;
+      this.Payload = payload;
     }
 
     #endregion
-  }
 
-  public class CancelEventArgs<T> : CancelEventArgs
-  {
     #region Properties
 
-    public T Data { get; set; }
-
-    #endregion
-
-    #region Constructors
-
-    public CancelEventArgs()
-    {
-    }
-
-    public CancelEventArgs(T data)
-    {
-      this.Data = data;
-    }
+    /// <summary>Gets or sets the data.</summary>
+    public T Payload { get; set; }
 
     #endregion
   }

@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Spotify.Data
+﻿namespace Spotify.Data
 {
   using SpotifyWebApi.Model;
-  using SpotifyWebApi.Model.Uri;
 
-  class PlaylistTrackData
+  /// <summary>The playlist track data.</summary>
+  internal class PlaylistTrackData
   {
-    public string PlaylistUri { get; set; }
+    #region Properties
+
+    /// <summary>Gets or sets the playlist track.</summary>
     public PlaylistTrack PlaylistTrack { get; set; }
+
+    /// <summary>Gets or sets the playlist uri.</summary>
+    public string PlaylistUri { get; set; }
+
+    #endregion
   }
 }

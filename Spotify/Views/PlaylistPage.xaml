@@ -9,29 +9,32 @@
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="260"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="260" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Background="{ThemeResource ElementDefaultColorDark}" >
+        <Grid Background="{ThemeResource ElementDefaultColorDark}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="260"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="260" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding Image}" Width="220" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Image Source="{Binding Image}" Width="220" VerticalAlignment="Center" HorizontalAlignment="Center" />
             <StackPanel Grid.Column="1" Margin="20" VerticalAlignment="Bottom">
-                <TextBlock Text="Playlist"  Foreground="#FFC1C1C1" FontFamily="Calibri Light" FontSize="22" FontWeight="Normal" FocusVisualPrimaryBrush="{x:Null}"/>
-                <TextBlock Text="{Binding Name}"  Foreground="#FF1DB954" FontFamily="Calibri" FontSize="48" FontWeight="Bold"/>
-                <TextBlock Text="{Binding Info}"  Foreground="#FF979797" FontFamily="Segoe UI" FontSize="15" FontWeight="Normal" />
+                <TextBlock Text="Playlist" Foreground="#FFC1C1C1" FontFamily="Calibri Light" FontSize="22"
+                           FontWeight="Normal" FocusVisualPrimaryBrush="{x:Null}" />
+                <TextBlock Text="{Binding Name}" Foreground="#FF1DB954" FontFamily="Calibri" FontSize="48"
+                           FontWeight="Bold" />
+                <TextBlock Text="{Binding Info}" Foreground="#FF979797" FontFamily="Segoe UI" FontSize="15"
+                           FontWeight="Normal" />
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                    <Border CornerRadius="15" 
+                    <Border CornerRadius="15"
                             Background="#FF1DB954" Margin="7">
-                        <TextBlock Margin="15,5,15,5" Text="Play" 
-                                   Foreground="White" FontFamily="Segoe UI" FontSize="15" HorizontalAlignment="Center"/>
+                        <TextBlock Margin="15,5,15,5" Text="Play"
+                                   Foreground="White" FontFamily="Segoe UI" FontSize="15" HorizontalAlignment="Center" />
                     </Border>
-                    <Border CornerRadius="15" 
+                    <Border CornerRadius="15"
                             Background="Transparent" Margin="7" BorderBrush="White" BorderThickness="2">
-                        <TextBlock Margin="15,5,15,5" Text="..." 
-                                   Foreground="White" FontFamily="Segoe UI" FontSize="15" HorizontalAlignment="Center"/>
+                        <TextBlock Margin="15,5,15,5" Text="..."
+                                   Foreground="White" FontFamily="Segoe UI" FontSize="15" HorizontalAlignment="Center" />
                     </Border>
                 </StackPanel>
             </StackPanel>
@@ -41,12 +44,11 @@
                   IsSwipeEnabled="true"
                   SelectionMode="Single"
                   ShowsScrollingPlaceholders="True">
-            <GridView.ItemTemplate >
+            <GridView.ItemTemplate>
                 <DataTemplate>
-                    <views:PlaylistTrackItem/>
+                    <views:PlaylistTrackItem />
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
     </Grid>
 </Page>
-
