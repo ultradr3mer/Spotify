@@ -18,6 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A995D32B-0379-45A3-9B3B-128069A9B681}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{A995D32B-0379-45A3-9B3B-128069A9B681}.Debug|Any CPU.Build.0 = Debug|x86
+		{A995D32B-0379-45A3-9B3B-128069A9B681}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{A995D32B-0379-45A3-9B3B-128069A9B681}.Debug|ARM.ActiveCfg = Debug|ARM
 		{A995D32B-0379-45A3-9B3B-128069A9B681}.Debug|ARM.Build.0 = Debug|ARM
 		{A995D32B-0379-45A3-9B3B-128069A9B681}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -43,14 +45,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FBFBC631-5A88-4F9D-8F21-B5B6250EFDC9}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.ngroup.info/tfs/root
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Spotify\\Spotify.csproj
-		SccProjectName1 = Spotify
-		SccLocalPath1 = Spotify
 	EndGlobalSection
 EndGlobal
