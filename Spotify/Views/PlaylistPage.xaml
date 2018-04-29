@@ -19,11 +19,7 @@
                 <ColumnDefinition Width="260" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding Image}" Stretch="UniformToFill" Grid.ColumnSpan="2">
-                <interactivity:Interaction.Behaviors>
-                    <behaviors:Blur Value="20" AutomaticallyStart="true"/>
-                </interactivity:Interaction.Behaviors>
-            </Image>
+            <Image Source="{Binding Image}" x:Name="BlurImage"  Stretch="UniformToFill" Grid.ColumnSpan="2"/>
             <Grid Grid.ColumnSpan="2">
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
