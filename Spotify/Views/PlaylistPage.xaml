@@ -6,6 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:Spotify.ViewModels"
     xmlns:views="using:Spotify.Views"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -17,7 +19,20 @@
                 <ColumnDefinition Width="260" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding Image}" Width="220" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Image Source="{Binding Image}" Stretch="UniformToFill" Grid.ColumnSpan="2">
+                <interactivity:Interaction.Behaviors>
+                    <behaviors:Blur Value="20" AutomaticallyStart="true"/>
+                </interactivity:Interaction.Behaviors>
+            </Image>
+            <Grid Grid.ColumnSpan="2">
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                        <GradientStop Color="#CC252525"/>
+                        <GradientStop Color="#4C252525" Offset="0.99"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+            </Grid>
+            <Image Grid.Column="0" Source="{Binding Image}" Width="220" VerticalAlignment="Center" HorizontalAlignment="Center" />
             <StackPanel Grid.Column="1" Margin="20" VerticalAlignment="Bottom">
                 <TextBlock Text="Playlist" Foreground="#FFC1C1C1" FontFamily="Calibri Light" FontSize="22"
                            FontWeight="Normal" FocusVisualPrimaryBrush="{x:Null}" />
