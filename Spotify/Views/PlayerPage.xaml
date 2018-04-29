@@ -9,9 +9,9 @@
     <Page.Resources>
         <AcrylicBrush x:Key="HostBackdropBrush"
                       BackgroundSource="HostBackdrop"
-                      TintColor="#0f4a2c"
+                      TintColor="{ThemeResource LowerBarColor}"
                       TintOpacity="0.6"
-                      FallbackColor="#1e4933" />
+                      FallbackColor="{ThemeResource LowerBarColor}" />
         <Style TargetType="Slider" x:Key="SliderWithoutThumb">
             <Setter Property="Background" Value="{ThemeResource SystemControlForegroundBaseMediumLowBrush}" />
             <Setter Property="BorderThickness" Value="{ThemeResource SliderBorderThemeThickness}" />

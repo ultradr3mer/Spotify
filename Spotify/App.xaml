@@ -6,6 +6,10 @@
     xmlns:mvvm="using:Microsoft.Practices.Prism.Mvvm"
     RequestedTheme="Dark">
     <mvvm:MvvmAppBase.Resources>
-        <ResourceDictionary Source="Resources.xaml" />
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </mvvm:MvvmAppBase.Resources>
 </mvvm:MvvmAppBase>

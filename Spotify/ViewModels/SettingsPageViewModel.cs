@@ -24,6 +24,9 @@
     /// <summary>The property client secrets value.</summary>
     private string propClientSecret;
 
+    /// <summary>The <see cref="UseSystemAccentColor" /> property's value.</summary>
+    private bool propUseSystemAccentColor;
+
     #endregion
 
     #region Constructors
@@ -42,39 +45,38 @@
 
     #region Properties
 
-    /// <summary>
-    /// Gets or sets the client id.
-    /// </summary>
+    /// <summary>Gets or sets the client id.</summary>
     public string ClientId
     {
       get { return this.propClientId; }
       set { this.SetProperty(ref this.propClientId, value); }
     }
 
-    /// <summary>
-    /// Gets or sets the client secret.
-    /// </summary>
+    /// <summary>Gets or sets the client secret.</summary>
     public string ClientSecret
     {
       get { return this.propClientSecret; }
       set { this.SetProperty(ref this.propClientSecret, value); }
     }
 
+    /// <summary>Gets or sets a value indicating whether to use the use the system accent color.</summary>
+    public bool UseSystemAccentColor
+    {
+      get { return this.propUseSystemAccentColor; }
+      set { this.SetProperty(ref this.propUseSystemAccentColor, value); }
+    }
+
     #endregion
 
     #region Methods
 
-    /// <summary>
-    /// Called when navigated from this view.
-    /// </summary>
+    /// <summary>Called when navigated from this view.</summary>
     internal void OnNavigatedFrom()
     {
       this.settingsService.SetSettings(this.AttachedDataModel);
     }
 
-    /// <summary>
-    /// Handles the settings changed event.
-    /// </summary>
+    /// <summary>Handles the settings changed event.</summary>
     /// <param name="data">The data.</param>
     private void HandleSettingsChanged(SettingsData data)
     {

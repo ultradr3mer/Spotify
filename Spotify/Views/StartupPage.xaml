@@ -13,6 +13,7 @@
             </Storyboard>
         </Grid.Resources>
         <Image Source="ms-appx:///Assets/Sennheiser.jpg" Stretch="UniformToFill" />
+        <Image Source="ms-appx:///Assets/Square44x44Logo.scale-400.png" VerticalAlignment="Top" HorizontalAlignment="Right" Width="176"/>
         <WebView Name="ConnectWebView" Source="{Binding ConnectUrl}" NavigationStarting="WebView_NavigationStarting" />
     </Grid>
 </Page>
