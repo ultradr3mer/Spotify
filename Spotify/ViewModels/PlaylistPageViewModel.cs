@@ -4,6 +4,9 @@
   using System.Collections.Generic;
   using System.Collections.ObjectModel;
   using System.Linq;
+  using System.Windows.Input;
+
+  using Microsoft.Practices.Prism.Commands;
 
   using Prism.Events;
 
@@ -40,11 +43,16 @@
     /// <summary>The property names value.</summary>
     private string propName;
 
+    /// <summary>The <see cref="PlayCommand" /> property's value.</summary>
+    private ICommand propPlayCommand;
+
     /// <summary>The property track view models value.</summary>
     private ObservableCollection<PlaylistTrackItemViewModel> propTrackViewModels = new ObservableCollection<PlaylistTrackItemViewModel>();
 
     /// <summary>The property URIs value.</summary>
     private string propUri;
+
+    private PlaybackService playBackService;
 
     #endregion
 
@@ -56,6 +64,7 @@
     {
       this.container = container;
       this.playListService = container.Resolve<PlaylistService>();
+      this.playBackService = container.Resolve<PlaybackService>();
 
       var eventAggregator = container.Resolve<IEventAggregator>();
       eventAggregator.GetEvent<PlaylistChangedEvent>().Subscribe(this.HandlePlaylistChanged);
@@ -64,6 +73,16 @@
 
       this.ReadingDataModel += this.ReadDataModel;
       this.NullingDataModel += this.NullDataModel;
+
+      this.PlayCommand = new DelegateCommand(this.PlayCommandExecute);
+    }
+
+    /// <summary>
+    /// Executes the play command.
+    /// </summary>
+    private void PlayCommandExecute()
+    {
+      this.playBackService.SetPlaylist(SpotifyUri.Make(this.Uri));
     }
 
     #endregion
@@ -92,6 +111,13 @@
       get { return this.propName; }
 
       set { this.SetProperty(ref this.propName, value); }
+    }
+
+    /// <summary>Gets or sets the playCommand.</summary>
+    public ICommand PlayCommand
+    {
+      get { return this.propPlayCommand; }
+      set { this.SetProperty(ref this.propPlayCommand, value); }
     }
 
     /// <summary>Gets or sets the track view models.</summary>

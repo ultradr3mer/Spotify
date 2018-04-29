@@ -25,17 +25,8 @@
                            FontWeight="Bold" />
                 <TextBlock Text="{Binding Info}" Foreground="#FF979797" FontFamily="Segoe UI" FontSize="15"
                            FontWeight="Normal" />
-                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                    <Border CornerRadius="15"
-                            Background="#FF1DB954" Margin="7">
-                        <TextBlock Margin="15,5,15,5" Text="Play"
-                                   Foreground="White" FontFamily="Segoe UI" FontSize="15" HorizontalAlignment="Center" />
-                    </Border>
-                    <Border CornerRadius="15"
-                            Background="Transparent" Margin="7" BorderBrush="White" BorderThickness="2">
-                        <TextBlock Margin="15,5,15,5" Text="..."
-                                   Foreground="White" FontFamily="Segoe UI" FontSize="15" HorizontalAlignment="Center" />
-                    </Border>
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,10,0,0" >
+                    <Button Content="Play" Command="{Binding PlayCommand}" Background="{ThemeResource SystemAccentColor}"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

@@ -147,7 +147,7 @@
     /// <param name="data">The object.</param>
     private void HandleCurrentlyPlayingContextChanged(CurrentlyPlayingContext data)
     {
-      this.IsSelected = data.Context.Uri == this.PlaylistUri && data.Item.Uri == this.Uri;
+      this.IsSelected = data.Context?.Uri == this.PlaylistUri && data.Item?.Uri == this.Uri;
     }
 
     /// <summary>Executes the play command.</summary>

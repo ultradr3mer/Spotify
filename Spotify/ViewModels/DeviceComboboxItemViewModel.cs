@@ -19,6 +19,9 @@
     /// <summary>The property names value.</summary>
     private string propName;
 
+    /// <summary>The <see cref="VolumePercent" /> property's value.</summary>
+    private int? propVolumePercent;
+
     #endregion
 
     #region Properties
@@ -42,6 +45,13 @@
     {
       get { return this.propName; }
       set { this.SetProperty(ref this.propName, value); }
+    }
+
+    /// <summary>Gets or sets the volume in percent.</summary>
+    public int? VolumePercent
+    {
+      get { return this.propVolumePercent; }
+      set { this.SetProperty(ref this.propVolumePercent, value); }
     }
 
     #endregion

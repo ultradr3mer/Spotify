@@ -85,6 +85,9 @@
     /// <summary>The property progresss value.</summary>
     private int propProgress;
 
+    /// <summary>The <see cref="ProgressHasFocus" /> property's value.</summary>
+    private bool propProgressHasFocus;
+
     /// <summary>The property selected devices value.</summary>
     private DeviceComboBoxItemViewModel propSelectedDevice;
 
@@ -96,6 +99,12 @@
 
     /// <summary>The property track names value.</summary>
     private string propTrackName;
+
+    /// <summary>The <see cref="Volume" /> property's value.</summary>
+    private int propVolume;
+
+    /// <summary>The <see cref="VolumeHasFocus" /> property's value.</summary>
+    private bool propVolumeHasFocus;
 
     /// <summary>The property web player URIs value.</summary>
     private Uri propWebPlayerUri;
@@ -199,6 +208,13 @@
       set { this.SetProperty(ref this.propProgress, value); }
     }
 
+    /// <summary>Gets or sets a value indicating whether the progress bar has focus.</summary>
+    public bool ProgressHasFocus
+    {
+      get { return this.propProgressHasFocus; }
+      set { this.SetProperty(ref this.propProgressHasFocus, value); }
+    }
+
     /// <summary>Gets or sets the selected device.</summary>
     public DeviceComboBoxItemViewModel SelectedDevice
     {
@@ -225,6 +241,20 @@
     {
       get { return this.propTrackName; }
       set { this.SetProperty(ref this.propTrackName, value); }
+    }
+
+    /// <summary>Gets or sets the player volume in percent.</summary>
+    public int Volume
+    {
+      get { return this.propVolume; }
+      set { this.SetProperty(ref this.propVolume, value); }
+    }
+
+    /// <summary>Gets or sets a value indicating whether the volume has focus.</summary>
+    public bool VolumeHasFocus
+    {
+      get { return this.propVolumeHasFocus; }
+      set { this.SetProperty(ref this.propVolumeHasFocus, value); }
     }
 
     /// <summary>Gets or sets the web player uri.</summary>
@@ -257,15 +287,18 @@
       this.TrackName = data.Item?.Name;
       this.ArtistsNames = data.Item == null ? null : string.Join(", ", data.Item.Artists.Select(o => o.Name));
 
-      if (data.Item != null)
+      if (!this.ProgressHasFocus)
       {
-        this.Progress = data.ProgressMs ?? 0;
-        this.Duration = data.Item.DurationMs;
-      }
-      else
-      {
-        this.Progress = 0;
-        this.Duration = 1;
+        if (data.Item != null)
+        {
+          this.Progress = data.ProgressMs ?? 0;
+          this.Duration = data.Item.DurationMs;
+        }
+        else
+        {
+          this.Progress = 0;
+          this.Duration = 1;
+        }
       }
 
       this.isPlaying = data.IsPlaying;
@@ -308,6 +341,11 @@
 
       this.SelectedDevice = this.Devices.FirstOrDefault(o => o.IsActive);
 
+      if (!this.VolumeHasFocus)
+      {
+        this.Volume = this.SelectedDevice?.VolumePercent ?? 0;
+      }
+
       this.UpdateIsLocalDeviceActive();
 
       this.isReadingEvents = false;
@@ -342,6 +380,11 @@
         {
           this.SelectedDevice = this.Devices.FirstOrDefault(o => o.Name != this.playbackService.WebPlayerClientName);
         }
+      }
+
+      if (e.PropertyName == "Volume" && !this.isReadingEvents)
+      {
+        this.playbackService.SetVolume(this.Volume);
       }
 
       if (e.PropertyName == "Progress" && !this.isReadingEvents)

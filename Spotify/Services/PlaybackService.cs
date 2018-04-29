@@ -79,13 +79,15 @@
 
     /// <summary>Activates the device.</summary>
     /// <param name="deviceId">The device identifier.</param>
-    public async void ActivateDevice(string deviceId)
+    /// <param name="playBack">Whether the playback on the new device is active.</param>
+    public async void ActivateDevice(string deviceId, bool? playBack = null)
     {
       await this.api.Player.TransferPlayback(
         new List<string>
           {
             deviceId
-          });
+          },
+        playBack);
     }
 
     /// <summary>Sets the playback to the next title.</summary>
@@ -110,6 +112,15 @@
     public void Resume()
     {
       this.api.Player.StartPlayback();
+    }
+
+    /// <summary>Sets the  currently played playlist.</summary>
+    /// <param name="uri">The uri of the playlist.</param>
+    public async void SetPlaylist(SpotifyUri uri)
+    {
+      await this.EnsureActiveDeviceExists();
+
+      await this.api.Player.StartPlayback(null, uri, null, null);
     }
 
     /// <summary>Sets the progress inside the current title.</summary>
@@ -143,6 +154,13 @@
           });
     }
 
+    /// <summary>Sets the playback volume.</summary>
+    /// <param name="volume">The volume in percent.</param>
+    public async void SetVolume(int volume)
+    {
+      await this.api.Player.SetVolume(volume);
+    }
+
     /// <summary>Starts the continuous update.</summary>
     public void StartContinuousUpdate()
     {
@@ -165,7 +183,7 @@
         var localDevice = this.devicesContainer.Devices.FirstOrDefault(o => o.Name == this.WebPlayerClientName);
         if (localDevice != null)
         {
-          this.ActivateDevice(localDevice.Id);
+          this.ActivateDevice(localDevice.Id, false);
           while (!this.devicesContainer.Devices.Any(o => o.IsActive)) await Task.Delay(100);
         }
       }
