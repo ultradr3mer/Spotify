@@ -276,8 +276,8 @@
             </StackPanel>
         </Grid>
         <StackPanel Margin="5" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal">
-            <Button Background="Transparent" Command="{Binding ShuffleCommand}" Margin="1" Style="{StaticResource ButtonRevealStyle}">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{Binding ShuffleGlyph}" FontSize="24" />
+            <Button Background="Transparent" Command="{Binding ShuffleCommand}" Opacity="{Binding ShuffleOpacity}" Margin="1" Style="{StaticResource ButtonRevealStyle}">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8B1;" FontSize="24" />
             </Button>
             <Button Background="Transparent" Command="{Binding PreviousCommand}" Margin="1"
                     Style="{StaticResource ButtonRevealStyle}">
@@ -290,6 +290,9 @@
             <Button Background="Transparent" Command="{Binding NextCommand}" Margin="1"
                     Style="{StaticResource ButtonRevealStyle}">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE893;" FontSize="36" />
+            </Button>
+            <Button Background="Transparent" Command="{Binding RepeatCommand}" Opacity="{Binding RepeatOpacity}" Margin="1" Style="{StaticResource ButtonRevealStyle}">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{Binding RepeatGlyph}" FontSize="24" />
             </Button>
         </StackPanel>
         <StackPanel Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">

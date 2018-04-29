@@ -19,6 +19,8 @@
 
   using Windows.UI.Xaml.Media.Imaging;
 
+  using SpotifyWebApi.Model.Enum;
+
   /// <summary>The playback service.</summary>
   internal class PlaybackService
   {
@@ -128,6 +130,13 @@
     public void SetProgress(int progressMs)
     {
       this.api.Player.Seek(progressMs);
+    }
+
+    /// <summary>Sets the playbacks repeat state.</summary>
+    /// <param name="state">The next repeat state.</param>
+    public void SetRepeat(RepeatState state)
+    {
+      this.api.Player.SetRepeat(state);
     }
 
     /// <summary>Sets whether the shuffle is active.</summary>

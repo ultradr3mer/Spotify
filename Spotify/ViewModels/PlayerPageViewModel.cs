@@ -22,6 +22,8 @@
   using Windows.UI.Xaml.Controls;
   using Windows.UI.Xaml.Media.Imaging;
 
+  using SpotifyWebApi.Model.Enum;
+
   /// <summary>The player page view model.</summary>
   /// <seealso cref="Microsoft.Practices.Prism.Mvvm.ViewModel" />
   internal class PlayerPageViewModel : ViewModel
@@ -34,11 +36,11 @@
     /// <summary>The play glyph</summary>
     private const char PlayGlyph = (char)Symbol.Play;
 
-    /// <summary>The shuffle off glyph.</summary>
-    private const char ShuffleOffGlyph = (char)Symbol.Forward;
+    /// <summary>The repeat all glyph.</summary>
+    private const char RepeatAllGlyph = (char)Symbol.RepeatAll;
 
-    /// <summary>The shuffle on glyph.</summary>
-    private const char ShuffleOnGlyph = (char)Symbol.Shuffle;
+    /// <summary>The repeat all glyph.</summary>
+    private const char RepeatOneGlyph = (char)Symbol.RepeatOne;
 
     /// <summary>The unity container.</summary>
     private readonly IUnityContainer container;
@@ -88,6 +90,15 @@
     /// <summary>The <see cref="ProgressHasFocus" /> property's value.</summary>
     private bool propProgressHasFocus;
 
+    /// <summary>The <see cref="RepeatCommand" /> property's value.</summary>
+    private ICommand propRepeatCommand;
+
+    /// <summary>The <see cref="RepeatGlyph" /> property's value.</summary>
+    private char propRepeatGlyph;
+
+    /// <summary>The <see cref="RepeatOpacity" /> property's value.</summary>
+    private double propRepeatOpacity;
+
     /// <summary>The property selected devices value.</summary>
     private DeviceComboBoxItemViewModel propSelectedDevice;
 
@@ -96,6 +107,9 @@
 
     /// <summary>The <see cref="ShuffleGlyph" /> property's value.</summary>
     private char propShuffleGlyph;
+
+    /// <summary>The <see cref="ShuffleOpacity" /> property's value.</summary>
+    private double propShuffleOpacity;
 
     /// <summary>The property track names value.</summary>
     private string propTrackName;
@@ -108,6 +122,11 @@
 
     /// <summary>The property web player URIs value.</summary>
     private Uri propWebPlayerUri;
+
+    /// <summary>
+    /// The repeat state.
+    /// </summary>
+    private RepeatState repeatState;
 
     #endregion
 
@@ -128,6 +147,7 @@
       this.NextCommand = new DelegateCommand(this.NextCommandExecute);
       this.PreviousCommand = new DelegateCommand(this.PreviousCommandExecute);
       this.ShuffleCommand = new DelegateCommand(this.ShuffleCommandExecute);
+      this.RepeatCommand = new DelegateCommand(this.RepeatCommandExecute);
 
       this.PropertyChanged += this.PlayerPageViewModelPropertyChanged;
 
@@ -215,6 +235,27 @@
       set { this.SetProperty(ref this.propProgressHasFocus, value); }
     }
 
+    /// <summary>Gets or sets the repeat command.</summary>
+    public ICommand RepeatCommand
+    {
+      get { return this.propRepeatCommand; }
+      set { this.SetProperty(ref this.propRepeatCommand, value); }
+    }
+
+    /// <summary>Gets or sets the repeat glyph.</summary>
+    public char RepeatGlyph
+    {
+      get { return this.propRepeatGlyph; }
+      set { this.SetProperty(ref this.propRepeatGlyph, value); }
+    }
+
+    /// <summary>Gets or sets the repeat opacity.</summary>
+    public double RepeatOpacity
+    {
+      get { return this.propRepeatOpacity; }
+      set { this.SetProperty(ref this.propRepeatOpacity, value); }
+    }
+
     /// <summary>Gets or sets the selected device.</summary>
     public DeviceComboBoxItemViewModel SelectedDevice
     {
@@ -229,11 +270,11 @@
       set { this.SetProperty(ref this.propShuffleCommand, value); }
     }
 
-    /// <summary>Gets or sets the glyph for the shuffle button.</summary>
-    public char ShuffleGlyph
+    /// <summary>Gets or sets the shuffle opacity.</summary>
+    public double ShuffleOpacity
     {
-      get { return this.propShuffleGlyph; }
-      set { this.SetProperty(ref this.propShuffleGlyph, value); }
+      get { return this.propShuffleOpacity; }
+      set { this.SetProperty(ref this.propShuffleOpacity, value); }
     }
 
     /// <summary>Gets or sets the track name.</summary>
@@ -302,12 +343,14 @@
       }
 
       this.isPlaying = data.IsPlaying;
-
       this.PlayPauseGlyph = this.isPlaying ? PlayerPageViewModel.PauseGlyph : PlayerPageViewModel.PlayGlyph;
 
       this.isShuffleActive = data.ShuffleState;
+      this.ShuffleOpacity = this.isShuffleActive ? 1.0 : 0.3;
 
-      this.ShuffleGlyph = this.isShuffleActive ? PlayerPageViewModel.ShuffleOnGlyph : PlayerPageViewModel.ShuffleOffGlyph;
+      this.repeatState = string.IsNullOrEmpty(data.RepeatState) ? RepeatState.Off : Enum.Parse<RepeatState>(data.RepeatState, true);
+      this.RepeatGlyph = this.repeatState == RepeatState.Track ? PlayerPageViewModel.RepeatOneGlyph : PlayerPageViewModel.RepeatAllGlyph;
+      this.RepeatOpacity = this.repeatState == RepeatState.Off ? 0.3 : 1.0;
 
       this.isReadingEvents = false;
     }
@@ -410,6 +453,29 @@
     private void PreviousCommandExecute()
     {
       this.playbackService.Previous();
+    }
+
+    /// <summary>Executes the repeat command.</summary>
+    private void RepeatCommandExecute()
+    {
+      RepeatState nextRepeatState;
+
+      switch (this.repeatState)
+      {
+        case RepeatState.Off:
+          nextRepeatState = RepeatState.Context;
+          break;
+
+        case RepeatState.Context:
+          nextRepeatState = RepeatState.Track;
+          break;
+
+        default:
+          nextRepeatState = RepeatState.Off;
+          break;
+      }
+
+      this.playbackService.SetRepeat(nextRepeatState);
     }
 
     /// <summary>Executes the shuffle command.</summary>
