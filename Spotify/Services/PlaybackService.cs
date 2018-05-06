@@ -181,7 +181,7 @@
     /// <returns>an awaitable.</returns>
     private async Task EnsureActiveDeviceExists()
     {
-      if (this.devicesContainer == null)
+      if (this.devicesContainer?.Devices == null)
       {
         return;
       }

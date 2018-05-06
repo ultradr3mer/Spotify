@@ -10,6 +10,8 @@
   using Windows.ApplicationModel;
   using Windows.UI.Xaml.Controls;
 
+  using Microsoft.Toolkit.Uwp.UI.Animations;
+
   /// <summary>
   /// The main page.
   /// </summary>
@@ -94,7 +96,7 @@
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
-    private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    private async void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       if (e.PropertyName == "Playlists")
       {
@@ -108,6 +110,10 @@
                        };
           this.MainNavigation.MenuItems.Add(item);
         }
+      }
+      else if (e.PropertyName == "HasPlaybackState")
+      {
+        await this.ZoomPlayerIn.BeginAsync();
       }
     }
 

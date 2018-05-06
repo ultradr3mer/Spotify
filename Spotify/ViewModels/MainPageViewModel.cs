@@ -11,6 +11,8 @@
   using Spotify.Events;
   using Spotify.Services;
 
+  using SpotifyWebApi.Model;
+
   using Unity;
 
   /// <summary>The main pages view model.</summary>
@@ -25,6 +27,9 @@
     /// <summary>The connection service.</summary>
     private ConnectionService connectionService;
 
+    /// <summary>The <see cref="HasPlaybackState" /> property's value.</summary>
+    private bool propHasPlaybackState;
+
     /// <summary>The property playlists value.</summary>
     private BindingList<PlaylistMenuItemViewModel> propPlaylists;
 
@@ -36,18 +41,29 @@
     /// <param name="container">The container.</param>
     public MainPageViewModel(IUnityContainer container)
     {
+      this.HasPlaybackState = false;
+
       this.container = container;
 
       this.connectionService = container.Resolve<ConnectionService>();
 
       var eventAggregator = container.Resolve<IEventAggregator>();
-
       eventAggregator.GetEvent<ConnectionEstablishedEvent>().Subscribe(this.HandleUserChanged);
+      eventAggregator.GetEvent<CurrentlyPlayingContextChangedEvent>().Subscribe(this.HandleCurrentlyPlayingContextChanged);
     }
 
     #endregion
 
     #region Properties
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this instance has playback state.
+    /// </summary>
+    public bool HasPlaybackState
+    {
+      get { return this.propHasPlaybackState; }
+      set { this.SetProperty(ref this.propHasPlaybackState, value); }
+    } 
 
     /// <summary>Gets or sets the playlists.</summary>
     public BindingList<PlaylistMenuItemViewModel> Playlists
@@ -60,7 +76,14 @@
 
     #region Methods
 
-    /// <summary>Handles the user changed.</summary>
+    /// <summary>Handles the currently playing context changed event.</summary>
+    /// <param name="data">The data.</param>
+    private void HandleCurrentlyPlayingContextChanged(CurrentlyPlayingContext data)
+    {
+      this.HasPlaybackState = true;
+    }
+
+    /// <summary>Handles the user changed event.</summary>
     /// <param name="data">The data.</param>
     private void HandleUserChanged(ConnectionData data)
     {

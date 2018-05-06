@@ -6,10 +6,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:Spotify.Views"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Storyboard x:Name="ZoomPlayerIn" Storyboard.TargetName="Player">
+            <DoubleAnimation Storyboard.TargetProperty="Height" From="0.0" To="80.0" Duration="0:0:0.2" EnableDependentAnimation="True"/>
+        </Storyboard>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="80" />
+            <RowDefinition x:Name="PlayerRowDefinition" Height="Auto" />
         </Grid.RowDefinitions>
         <NavigationView ItemInvoked="NavigationViewItemInvoked"
                         x:Name="MainNavigation"
@@ -30,7 +35,6 @@
                 <views:StartupPage />
             </Frame>
         </NavigationView>
-        <views:PlayerPage Grid.Row="1" />
+        <views:PlayerPage Name="Player" Height="0" Grid.Row="1" />
     </Grid>
-
 </Page>
